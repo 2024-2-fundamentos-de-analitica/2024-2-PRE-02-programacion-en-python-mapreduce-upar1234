@@ -6,7 +6,6 @@ import fileinput  ###Leer contenidos completos de archivos
 import glob
 import os.path
 from itertools import groupby
-
 import string
 
 
@@ -34,9 +33,6 @@ def load_input(input_directory):
             sequence.append((fileinput.filename(), line))
     return sequence
 
-    
-    
-
 
 #
 # Escriba la función line_preprocessing que recibe una lista de tuplas de la
@@ -46,14 +42,12 @@ def load_input(input_directory):
 def line_preprocessing(sequence):
     """Line Preprocessing"""
     sequence = [
-        (key, value.translate(str.maketrans("", "", string.punctuation)).lower().strip().strip())
+        (key, value.translate(str.maketrans("", "", string.punctuation)).lower().strip())
         for key, value in sequence
     ]
     return sequence
-
-
 #
-# Escriba una función llamada mapper que recibe una lista de tuplas de la
+# Escriba una función llamada maper que recibe una lista de tuplas de la
 # función anterior y retorna una lista de tuplas (clave, valor). En este caso,
 # la clave es cada palabra y el valor es 1, puesto que se está realizando un
 # conteo.
@@ -66,14 +60,13 @@ def line_preprocessing(sequence):
 #
 def mapper(sequence):
     """Mapper"""
-    # result = []
-    # for _, value in sequence:
-    #     for word in value.split():
-    #         result.append( (word, 1) )  
-    # return result
+    result = []
+    for _, value in sequence:
+        for word in value.split():
+           result.append( (word, 1) )  
+    return result
     return [(word, 1) for _, value in sequence for word in value.split()]
-
-
+  
 #
 # Escriba la función shuffle_and_sort que recibe la lista de tuplas entregada
 # por el mapper, y retorna una lista con el mismo contenido ordenado por la
@@ -131,7 +124,6 @@ def save_output(output_directory, sequence):
         for key, value in sequence:
             f.write(f"{key}\t{value}\n")
 
-
 #
 # La siguiente función crea un archivo llamado _SUCCESS en el directorio
 # entregado como parámetro.
@@ -156,8 +148,10 @@ def run_job(input_directory, output_directory):
     save_output(output_directory, sequence)
     create_marker(output_directory)
 
-if __name__ == "__main__":
+    from pprint import pprint
+    pprint(sequence)
+
+if __name__ == "_main_":
     run_job(
         "files/input",
-        "files/output",
-    )
+        "files/output",)
